@@ -1,0 +1,25 @@
+{
+  "name": "music-api-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jon-cunicella/music-api-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jon-cunicella/music-api-frontend/issues"
+  },
+  "homepage": "https://github.com/jon-cunicella/music-api-frontend#readme",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "jest": "^24.8.0",
+    "parcel": "^1.12.3"
+  }
+}

@@ -1,0 +1,96 @@
+/* Resets */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  --primary-color: var(--mid-tone);
+  --secondary-color: var(--accent-two-color);
+  --accent-color: rgba(25, 158, 72, 0.7);
+  --accent-two-color: #f8f8f8;
+  --base-tone: rgb(15, 15, 15);
+  --mid-tone: #66666666;
+  font: 20px/1.5 serif;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* application classes */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content-title {
+  margin-bottom: 2rem;
+}
+
+.content-list {
+  max-width: 50rem;
+  width: 90%;
+}
+
+.content-list__item {
+  background-color: var(--mid-tone);
+  padding: 1rem;
+  border-top: 2px solid black;
+}
+
+.content-list:last-child {
+  border-bottom: 2px solid black;
+}
+
+.header {
+  background-color: var(--accent-color);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.header-title {
+  margin-bottom: 6rem;
+}
+
+.navbar-list {
+  display: flex;
+}
+
+.navbar-list__item {
+  font-size: 24px;
+  padding: 1rem;
+}
+
+.navbar-list__item a {
+  color: var(--accent-two-color);
+}
+
+.navbar-list__item a:visited {
+  color: var(--accent-two-color);
+}
+
+/* utility classes */
+
+div.wrapper {
+  display: grid;
+  grid-template-rows: 0.5fr 2fr 0.5fr;
+  min-height: 100vh;
+}
+
+.footer {
+  background-color: var(--base-tone);
+  color: var(--accent-two-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
