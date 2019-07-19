@@ -27,6 +27,18 @@ class Components {
     return mainHeader;
   }
 
+  renderMainFooter() {
+    const mainFooter = Html()
+      .create('footer')
+      .addClass('footer');
+    const mainFooterCopy = Html()
+      .create('small')
+      .addClass('copy')
+      .html('&copy; 2019 Muzify');
+    mainFooter.addChild(mainFooterCopy);
+    return mainFooter;
+  }
+
   renderContentBlock(requestedData) {
     const contentBlock = Html()
       .create('section')
@@ -59,10 +71,10 @@ class Components {
     const wrapperDiv = this.getWrapperDiv();
     const mainHeader = this.renderMainHeader();
     // const mainContent = this.renderMainContent('books');
-    // const mainFooter = this.renderMainFooter();
+    const mainFooter = this.renderMainFooter();
     wrapperDiv.addChild(mainHeader);
     // wrapperDiv.addChild(mainContent);
-    // wrapperDiv.addChild(mainFooter);
+    wrapperDiv.addChild(mainFooter);
     app.replace(wrapperDiv);
   }
 }

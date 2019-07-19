@@ -331,6 +331,14 @@ function () {
       return mainHeader;
     }
   }, {
+    key: "renderMainFooter",
+    value: function renderMainFooter() {
+      var mainFooter = (0, _Html.default)().create('footer').addClass('footer');
+      var mainFooterCopy = (0, _Html.default)().create('small').addClass('copy').html('&copy; 2019 Muzify');
+      mainFooter.addChild(mainFooterCopy);
+      return mainFooter;
+    }
+  }, {
     key: "renderContentBlock",
     value: function renderContentBlock(requestedData) {
       var contentBlock = (0, _Html.default)().create('section').addClass('content-block');
@@ -353,11 +361,11 @@ function () {
       var app = this.getAppContext();
       var wrapperDiv = this.getWrapperDiv();
       var mainHeader = this.renderMainHeader(); // const mainContent = this.renderMainContent('books');
-      // const mainFooter = this.renderMainFooter();
 
+      var mainFooter = this.renderMainFooter();
       wrapperDiv.addChild(mainHeader); // wrapperDiv.addChild(mainContent);
-      // wrapperDiv.addChild(mainFooter);
 
+      wrapperDiv.addChild(mainFooter);
       app.replace(wrapperDiv);
     }
   }]);
@@ -439,7 +447,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64042" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65302" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
