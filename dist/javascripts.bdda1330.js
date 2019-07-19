@@ -149,10 +149,16 @@ function () {
       return this;
     }
   }, {
+    key: "addAnchor",
+    value: function addAnchor(href, text) {
+      this.create("a").addAttribute("href", href).text(text);
+      return this;
+    }
+  }, {
     key: "addChild",
     value: function addChild(elementToAdd) {
       if (elementToAdd.render() instanceof HTMLUnknownElement) {
-        throw new Error('Invalid HTML tag');
+        throw new Error("Invalid HTML tag");
       }
 
       this.element.append(elementToAdd.render());
@@ -162,7 +168,7 @@ function () {
     key: "addClass",
     value: function addClass(classToAdd) {
       if (this.element.classList.contains(classToAdd)) {
-        throw new Error('Class already exists on element.');
+        throw new Error("Class already exists on element.");
       }
 
       this.element.classList.add(classToAdd);
@@ -171,7 +177,7 @@ function () {
   }, {
     key: "click",
     value: function click(callback) {
-      this.element.addEventListener('click', callback);
+      this.element.addEventListener("click", callback);
       return this;
     }
   }, {
@@ -193,12 +199,12 @@ function () {
   }, {
     key: "_isClassQuery",
     value: function _isClassQuery(query) {
-      return query.startsWith('.');
+      return query.startsWith(".");
     }
   }, {
     key: "_isIdQuery",
     value: function _isIdQuery(query) {
-      return query.startsWith('#');
+      return query.startsWith("#");
     }
   }, {
     key: "render",
@@ -208,7 +214,7 @@ function () {
   }, {
     key: "replace",
     value: function replace(element) {
-      this.element.innerHTML = '';
+      this.element.innerHTML = "";
       this.addChild(element);
       return this;
     }
@@ -313,18 +319,28 @@ function () {
   _createClass(Components, [{
     key: "getAppContext",
     value: function getAppContext() {
-      return (0, _Html.default)().select('#app');
+      return (0, _Html.default)().select("#app");
     }
   }, {
     key: "getWrapperDiv",
     value: function getWrapperDiv() {
-      return (0, _Html.default)().create('div').addClass('wrapper');
+      return (0, _Html.default)().create("div").addClass("wrapper");
+    }
+  }, {
+    key: "renderNavMenu",
+    value: function renderNavMenu() {
+      var navMenu = (0, _Html.default)().create("nav").addClass("nav-menu");
+      var navList = (0, _Html.default)().create("ul").addClass("nav-menu__list");
+      var navListItemHome = (0, _Html.default)().create("li").addClass("nav-menu__list-item").addAnchor("/#", "Home");
+      navList.addChild(navListItemHome);
+      navMenu.addChild(navList);
+      return navMenu;
     }
   }, {
     key: "renderMainHeader",
     value: function renderMainHeader() {
-      var mainHeader = (0, _Html.default)().create('header').addClass('header');
-      var mainHeaderTitle = (0, _Html.default)().create('h1').addClass('header-title').text('Muzify'); // const nav = this.renderMainNav();
+      var mainHeader = (0, _Html.default)().create("header").addClass("header");
+      var mainHeaderTitle = (0, _Html.default)().create("h1").addClass("header-title").text("Muzify"); // const nav = this.renderMainNav();
 
       mainHeader.addChild(mainHeaderTitle); // mainHeader.addChild(nav);
 
@@ -333,17 +349,17 @@ function () {
   }, {
     key: "renderMainFooter",
     value: function renderMainFooter() {
-      var mainFooter = (0, _Html.default)().create('footer').addClass('footer');
-      var mainFooterCopy = (0, _Html.default)().create('small').addClass('copy').html('&copy; 2019 Muzify');
+      var mainFooter = (0, _Html.default)().create("footer").addClass("footer");
+      var mainFooterCopy = (0, _Html.default)().create("small").addClass("copy").html("&copy; 2019 Muzify");
       mainFooter.addChild(mainFooterCopy);
       return mainFooter;
     }
   }, {
     key: "renderContentBlock",
     value: function renderContentBlock(requestedData) {
-      var contentBlock = (0, _Html.default)().create('section').addClass('content-block');
-      var contentTitle = (0, _Html.default)().create('h2').addClass('content-title');
-      var contentList = (0, _Html.default)().create('ul').addClass('content-list'); //Dynamically render data from API
+      var contentBlock = (0, _Html.default)().create("section").addClass("content-block");
+      var contentTitle = (0, _Html.default)().create("h2").addClass("content-title");
+      var contentList = (0, _Html.default)().create("ul").addClass("content-list"); //Dynamically render data from API
       // Api().getRequest()
 
       contentBlock.addChild(contentTitle);
@@ -352,18 +368,20 @@ function () {
   }, {
     key: "renderPageArtists",
     value: function renderPageArtists() {
-      var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container');
-      currentMainContentContainer.replace(this.renderContentBlock('artists'));
+      var currentMainContentContainer = this.getWrapperDiv().select(".content").select(".container");
+      currentMainContentContainer.replace(this.renderContentBlock("artists"));
     }
   }, {
     key: "renderPageHome",
     value: function renderPageHome() {
       var app = this.getAppContext();
       var wrapperDiv = this.getWrapperDiv();
-      var mainHeader = this.renderMainHeader(); // const mainContent = this.renderMainContent('books');
+      var mainHeader = this.renderMainHeader();
+      var navMenu = this.renderNavMenu(); // const mainContent = this.renderMainContent('books');
 
       var mainFooter = this.renderMainFooter();
-      wrapperDiv.addChild(mainHeader); // wrapperDiv.addChild(mainContent);
+      wrapperDiv.addChild(mainHeader);
+      wrapperDiv.addChild(navMenu); // wrapperDiv.addChild(mainContent);
 
       wrapperDiv.addChild(mainFooter);
       app.replace(wrapperDiv);
@@ -447,7 +465,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64458" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51715" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
