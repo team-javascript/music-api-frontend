@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"public/javascripts/utils/html/Html.js":[function(require,module,exports) {
+})({"public/javascripts/utils/Html/Html.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -131,30 +131,24 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _default(query) {
-  return new Html(query);
+function _default() {
+  return new Html();
 }
 
 var Html =
 /*#__PURE__*/
 function () {
-  function Html(query) {
+  function Html() {
     _classCallCheck(this, Html);
-
-    if (typeof query !== "string") throw new Error("Argument must be a string");
-    var selection = document.querySelectorAll(query);
-
-    if (selection.length === 0) {
-      if (this._isClassQuery(query) || this._isIdQuery(query)) throw new Error("Element must be a valid HTML tag");
-      this.element = document.createElement(query);
-    } else if (selection.length === 1) {
-      this.element = selection[0];
-    } else {
-      this.element = selection;
-    }
   }
 
   _createClass(Html, [{
+    key: "addAttribute",
+    value: function addAttribute(attributeToSet, attributeValue) {
+      this.element.setAttribute(attributeToSet, attributeValue);
+      return this;
+    }
+  }, {
     key: "addChild",
     value: function addChild(elementToAdd) {
       if (elementToAdd.render() instanceof HTMLUnknownElement) {
@@ -175,19 +169,61 @@ function () {
       return this;
     }
   }, {
+    key: "click",
+    value: function click(callback) {
+      this.element.addEventListener('click', callback);
+      return this;
+    }
+  }, {
+    key: "create",
+    value: function create(elementType) {
+      this.element = document.createElement(elementType);
+      return this;
+    }
+  }, {
+    key: "html",
+    value: function html(contentToAdd) {
+      if (contentToAdd === undefined) {
+        return this.element.innerHTML;
+      }
+
+      this.element.innerHTML = contentToAdd;
+      return this;
+    }
+  }, {
     key: "_isClassQuery",
     value: function _isClassQuery(query) {
-      return query.startsWith(".");
+      return query.startsWith('.');
     }
   }, {
     key: "_isIdQuery",
     value: function _isIdQuery(query) {
-      return query.startsWith("#");
+      return query.startsWith('#');
     }
   }, {
     key: "render",
     value: function render() {
       return this.element;
+    }
+  }, {
+    key: "replace",
+    value: function replace(element) {
+      this.element.innerHTML = '';
+      this.addChild(element);
+      return this;
+    }
+  }, {
+    key: "select",
+    value: function select(query) {
+      var selection = document.querySelectorAll(query);
+
+      if (selection.length === 1) {
+        this.element = selection[0];
+      } else {
+        this.element = selection;
+      }
+
+      return this;
     }
   }, {
     key: "text",
@@ -241,7 +277,94 @@ function () {
 
   return Api;
 }();
-},{}],"public/javascripts/main.js":[function(require,module,exports) {
+},{}],"public/javascripts/utils/Components/Components.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Html = _interopRequireDefault(require("../Html/Html"));
+
+var _Api = _interopRequireDefault(require("../api/Api"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var _default = function _default() {
+  return new Components();
+};
+
+exports.default = _default;
+
+var Components =
+/*#__PURE__*/
+function () {
+  function Components() {
+    _classCallCheck(this, Components);
+  }
+
+  _createClass(Components, [{
+    key: "getAppContext",
+    value: function getAppContext() {
+      return (0, _Html.default)().select('#app');
+    }
+  }, {
+    key: "getWrapperDiv",
+    value: function getWrapperDiv() {
+      return (0, _Html.default)().create('div').addClass('wrapper');
+    }
+  }, {
+    key: "renderMainHeader",
+    value: function renderMainHeader() {
+      var mainHeader = (0, _Html.default)().create('header').addClass('header');
+      var mainHeaderTitle = (0, _Html.default)().create('h1').addClass('header-title').text('Muzify'); // const nav = this.renderMainNav();
+
+      mainHeader.addChild(mainHeaderTitle); // mainHeader.addChild(nav);
+
+      return mainHeader;
+    }
+  }, {
+    key: "renderContentBlock",
+    value: function renderContentBlock(requestedData) {
+      var contentBlock = (0, _Html.default)().create('section').addClass('content-block');
+      var contentTitle = (0, _Html.default)().create('h2').addClass('content-title');
+      var contentList = (0, _Html.default)().create('ul').addClass('content-list'); //Dynamically render data from API
+      // Api().getRequest()
+
+      contentBlock.addChild(contentTitle);
+      contentBlock.addChild(contentList);
+    }
+  }, {
+    key: "renderPageArtists",
+    value: function renderPageArtists() {
+      var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container');
+      currentMainContentContainer.replace(this.renderContentBlock('artists'));
+    }
+  }, {
+    key: "renderPageHome",
+    value: function renderPageHome() {
+      var app = this.getAppContext();
+      var wrapperDiv = this.getWrapperDiv();
+      var mainHeader = this.renderMainHeader(); // const mainContent = this.renderMainContent('books');
+      // const mainFooter = this.renderMainFooter();
+
+      wrapperDiv.addChild(mainHeader); // wrapperDiv.addChild(mainContent);
+      // wrapperDiv.addChild(mainFooter);
+
+      app.replace(wrapperDiv);
+    }
+  }]);
+
+  return Components;
+}();
+},{"../Html/Html":"public/javascripts/utils/Html/Html.js","../api/Api":"public/javascripts/utils/api/Api.js"}],"public/javascripts/main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -249,32 +372,38 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = main;
 
-var _Html = _interopRequireDefault(require("./utils/html/Html"));
-
-var _Api = _interopRequireDefault(require("./utils/api/Api"));
+var _Components = _interopRequireDefault(require("./utils/Components/Components"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function main() {
-  // get context of thing to add html to
-  var app = (0, _Html.default)("#app"); // build header element to add
-
-  var header = (0, _Html.default)("header").addClass("page-header"); // build h1 element to add
-
-  var h1 = (0, _Html.default)("h1").addClass("page-header__title").text("Musify | Artists"); // build nav element to add
-
-  var nav = (0, _Html.default)("nav").addClass("nav-list").text("Hello"); // add 'h1' and 'nav' to 'header'
-
-  header.addChild(h1);
-  header.addChild(nav); // add 'header' to app 'div'
-
-  app.addChild(header);
-  (0, _Api.default)().getRequest("/artist", function (artistData) {
-    console.log(artistData);
-    app.addChild((0, _Html.default)("p").text(artistData.firstName).addClass("artistComponent"));
-  });
+  (0, _Components.default)().renderPageHome(); // get context of thing to add html to
+  // const app = Html("#app");
+  // // build header element to add
+  // const header = Html("header").addClass("page-header");
+  // // build h1 element to add
+  // const h1 = Html("h1")
+  //   .addClass("page-header__title")
+  //   .text("Musify | Artists");
+  // // build nav element to add
+  // const nav = Html("nav")
+  //   .addClass("nav-list")
+  //   .text("Hello");
+  // // add 'h1' and 'nav' to 'header'
+  // header.addChild(h1);
+  // header.addChild(nav);
+  // // add 'header' to app 'div'
+  // app.addChild(header);
+  // Api().getRequest("/artist", artistData => {
+  //   console.log(artistData);
+  //   app.addChild(
+  //     Html("p")
+  //       .text(artistData.firstName)
+  //       .addClass("artistComponent")
+  //   );
+  // });
 }
-},{"./utils/html/Html":"public/javascripts/utils/html/Html.js","./utils/api/Api":"public/javascripts/utils/api/Api.js"}],"public/javascripts/index.js":[function(require,module,exports) {
+},{"./utils/Components/Components":"public/javascripts/utils/Components/Components.js"}],"public/javascripts/index.js":[function(require,module,exports) {
 "use strict";
 
 var _main = _interopRequireDefault(require("./main"));
@@ -310,7 +439,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62098" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64042" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,58 +1,88 @@
-export default function(query) {
-  return new Html(query);
+export default function() {
+  return new Html();
 }
 
 class Html {
-  constructor(query) {
-    if (typeof query !== "string") throw new Error("Argument must be a string");
+  addAttribute(attributeToSet, attributeValue) {
+    this.element.setAttribute(attributeToSet, attributeValue);
 
-    const selection = document.querySelectorAll(query);
-
-    if (selection.length === 0) {
-      if (this._isClassQuery(query) || this._isIdQuery(query))
-        throw new Error("Element must be a valid HTML tag");
-      this.element = document.createElement(query);
-    } else if (selection.length === 1) {
-      this.element = selection[0];
-    } else {
-      this.element = selection;
-    }
+    return this;
   }
 
   addChild(elementToAdd) {
     if (elementToAdd.render() instanceof HTMLUnknownElement) {
-      throw new Error('Invalid HTML tag')
+      throw new Error('Invalid HTML tag');
     }
-    this.element.append(elementToAdd.render())
-    return this
 
+    this.element.append(elementToAdd.render());
+
+    return this;
   }
 
   addClass(classToAdd) {
     if (this.element.classList.contains(classToAdd)) {
-      throw new Error('Class already exists on element.')
+      throw new Error('Class already exists on element.');
+    }
+    this.element.classList.add(classToAdd);
+    return this;
   }
-  this.element.classList.add(classToAdd)
-  return this
-}
+
+  click(callback) {
+    this.element.addEventListener('click', callback);
+
+    return this;
+  }
+
+  create(elementType) {
+    this.element = document.createElement(elementType);
+    return this;
+  }
+
+  html(contentToAdd) {
+    if (contentToAdd === undefined) {
+      return this.element.innerHTML;
+    }
+    this.element.innerHTML = contentToAdd;
+
+    return this;
+  }
 
   _isClassQuery(query) {
-    return query.startsWith(".");
+    return query.startsWith('.');
   }
 
   _isIdQuery(query) {
-    return query.startsWith("#");
+    return query.startsWith('#');
   }
 
   render() {
     return this.element;
   }
 
+  replace(element) {
+    this.element.innerHTML = '';
+    this.addChild(element);
+
+    return this;
+  }
+
+  select(query) {
+    const selection = document.querySelectorAll(query);
+
+    if (selection.length === 1) {
+      this.element = selection[0];
+    } else {
+      this.element = selection;
+    }
+
+    return this;
+  }
+
   text(textToAdd) {
     if (textToAdd === undefined) {
-      return this.element.textContent
+      return this.element.textContent;
     }
-    this.element.textContent = textToAdd
-    return this
+    this.element.textContent = textToAdd;
+    return this;
   }
 }
