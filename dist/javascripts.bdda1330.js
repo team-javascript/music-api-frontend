@@ -363,8 +363,23 @@ function () {
       var contentTitle = (0, _Html.default)().create('h2').addClass('content-title').text(requestedData);
       var contentList = (0, _Html.default)().create('ul').addClass('content-list');
       (0, _Api.default)().getRequest("http://localhost:3000/".concat(requestedData), function (responseCollection) {
+        console.log(requestedData);
         responseCollection.forEach(function (item) {
-          var contentBlockListItem = (0, _Html.default)().create('li').addClass('content-block__list-item').addChild((0, _Html.default)().create('a').addAttribute('href', "/".concat(requestedData, "/").concat(item.id)).text(item.firstName + ' ' + item.lastName).click(function (event) {
+          var name;
+
+          if (requestedData === 'artists') {
+            name = "".concat(item.firstName, " ").concat(item.lastName, " ");
+          }
+
+          if (requestedData === 'songs') {
+            name = "".concat(item.title);
+          }
+
+          if (requestedData === 'albums') {
+            name = "".concat(item.title);
+          }
+
+          var contentBlockListItem = (0, _Html.default)().create('li').addClass('content-block__list-item').addChild((0, _Html.default)().create('a').addAttribute('href', "/".concat(requestedData, "/").concat(item.id)).text(name).click(function (event) {
             console.log(item);
             event.preventDefault();
             var endpoint = event.target.getAttribute('href');
@@ -537,7 +552,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53189" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55867" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

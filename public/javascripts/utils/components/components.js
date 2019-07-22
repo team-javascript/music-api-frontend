@@ -74,7 +74,18 @@ class Components {
     Api().getRequest(
       `http://localhost:3000/${requestedData}`,
       responseCollection => {
+        console.log(requestedData);
         responseCollection.forEach(item => {
+          let name;
+          if (requestedData === 'artists') {
+            name = `${item.firstName} ${item.lastName} `;
+          }
+          if (requestedData === 'songs') {
+            name = `${item.title}`;
+          }
+          if (requestedData === 'albums') {
+            name = `${item.title}`;
+          }
           const contentBlockListItem = Html()
             .create('li')
             .addClass('content-block__list-item')
@@ -82,7 +93,7 @@ class Components {
               Html()
                 .create('a')
                 .addAttribute('href', `/${requestedData}/${item.id}`)
-                .text(item.firstName + ' ' + item.lastName)
+                .text(name)
                 .click(event => {
                   console.log(item);
                   event.preventDefault();
