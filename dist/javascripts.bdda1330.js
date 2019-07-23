@@ -329,10 +329,28 @@ function () {
   }, {
     key: "renderNavMenu",
     value: function renderNavMenu() {
+      var _this = this;
+
       var navMenu = (0, _Html.default)().create('nav').addClass('nav-menu');
       var navList = (0, _Html.default)().create('ul').addClass('nav-menu__list');
-      var navListItemHome = (0, _Html.default)().create('li').addClass('nav-menu__list-item').addAnchor('/#', 'Home');
+      var navListItemHome = (0, _Html.default)().create('li').addClass('nav-menu__list-item').addAnchor('/#', 'Home').click(function (event) {
+        event.preventDefault();
+
+        _this.renderPageHome();
+      });
+      var navListItemSongs = (0, _Html.default)().create('li').addClass('nav-menu__list-item').addAnchor('/#', 'Songs').click(function (event) {
+        event.preventDefault();
+
+        _this.renderPageSongs();
+      });
+      var navListItemAlbums = (0, _Html.default)().create('li').addClass('nav-menu__list-item').addAnchor('/#', 'Albums').click(function (event) {
+        event.preventDefault();
+
+        _this.renderPageAlbums();
+      });
       navList.addChild(navListItemHome);
+      navList.addChild(navListItemSongs);
+      navList.addChild(navListItemAlbums);
       navMenu.addChild(navList);
       return navMenu;
     }
@@ -357,7 +375,7 @@ function () {
   }, {
     key: "renderContentBlock",
     value: function renderContentBlock(requestedData) {
-      var _this = this;
+      var _this2 = this;
 
       var contentBlock = (0, _Html.default)().create('section').addClass('content-block');
       var contentTitle = (0, _Html.default)().create('h2').addClass('content-title').text(requestedData);
@@ -386,19 +404,19 @@ function () {
             var typeOfObject = endpoint.split('/')[1];
 
             if (typeOfObject === 'artists') {
-              _this.renderPageArtists(data);
+              _this2.renderPageArtists(data);
             }
 
             if (typeOfObject === 'songs') {
-              _this.renderPageBooks(data);
+              _this2.renderPageBooks(data);
             }
 
             if (typeOfObject === 'albums') {
-              _this.renderPageAlbums(data);
+              _this2.renderPageAlbums(data);
             }
 
             (0, _Api.default)().getRequest("http://localhost:3000/".concat(endpoint), function (data) {
-              _this.renderPageSingle(data, endpoint);
+              _this2.renderPageSingle(data, endpoint);
             });
           }));
           contentList.addChild(contentBlockListItem);
@@ -430,14 +448,14 @@ function () {
     value: function renderPageSongs() {
       var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container');
       currentMainContentContainer.replace(this.renderContentBlock('songs'));
-      console.log('this is artist');
+      console.log('this is songs');
     }
   }, {
     key: "renderPageAlbums",
     value: function renderPageAlbums() {
       var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container');
       currentMainContentContainer.replace(this.renderContentBlock('albums'));
-      console.log('this is artist');
+      console.log('this is albums');
     }
   }, {
     key: "renderPageSingle",
@@ -552,7 +570,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55867" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56678" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

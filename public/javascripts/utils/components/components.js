@@ -25,8 +25,31 @@ class Components {
     const navListItemHome = Html()
       .create('li')
       .addClass('nav-menu__list-item')
-      .addAnchor('/#', 'Home');
+      .addAnchor('/#', 'Home')
+      .click(event => {
+        event.preventDefault();
+        this.renderPageHome();
+      });
+
+    const navListItemSongs = Html()
+      .create('li')
+      .addClass('nav-menu__list-item')
+      .addAnchor('/#', 'Songs')
+      .click(event => {
+        event.preventDefault();
+        this.renderPageSongs();
+      });
+    const navListItemAlbums = Html()
+      .create('li')
+      .addClass('nav-menu__list-item')
+      .addAnchor('/#', 'Albums')
+      .click(event => {
+        event.preventDefault();
+        this.renderPageAlbums();
+      });
     navList.addChild(navListItemHome);
+    navList.addChild(navListItemSongs);
+    navList.addChild(navListItemAlbums);
     navMenu.addChild(navList);
     return navMenu;
   }
@@ -153,7 +176,7 @@ class Components {
       .select('.content')
       .select('.container');
     currentMainContentContainer.replace(this.renderContentBlock('songs'));
-    console.log('this is artist');
+    console.log('this is songs');
   }
 
   renderPageAlbums() {
@@ -161,7 +184,7 @@ class Components {
       .select('.content')
       .select('.container');
     currentMainContentContainer.replace(this.renderContentBlock('albums'));
-    console.log('this is artist');
+    console.log('this is albums');
   }
 
   renderPageSingle() {
