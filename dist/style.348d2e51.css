@@ -26,13 +26,33 @@ a {
 
 /* application classes */
 
-.content-list__item {
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-area: main;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.content-title {
+  text-transform: capitalize;
+  margin-bottom: 3rem;
+}
+
+.content-block__list-item {
   background-color: var(--mid-tone);
   padding: 1rem;
   border-top: 2px solid black;
 }
 
-.content-list:last-child {
+.content-block__list-item:last-child {
   border-bottom: 2px solid black;
 }
 
@@ -45,6 +65,11 @@ a {
 
 .nav-menu {
   grid-area: nav;
+}
+
+.nav-menu__list {
+  display: flex;
+  flex-direction: column;
 }
 
 .navbar-list {
