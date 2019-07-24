@@ -319,31 +319,31 @@ function () {
   _createClass(Components, [{
     key: "getAppContext",
     value: function getAppContext() {
-      return (0, _Html.default)().select("#app");
+      return (0, _Html.default)().select('#app');
     }
   }, {
     key: "getWrapperDiv",
     value: function getWrapperDiv() {
-      return (0, _Html.default)().create("div").addClass("wrapper");
+      return (0, _Html.default)().create('div').addClass('wrapper');
     }
   }, {
     key: "renderNavMenu",
     value: function renderNavMenu() {
       var _this = this;
 
-      var navMenu = (0, _Html.default)().create("nav").addClass("nav-menu");
-      var navList = (0, _Html.default)().create("ul").addClass("nav-menu__list");
-      var navListItemHome = (0, _Html.default)().create("li").addClass("nav-menu__list-item").addAnchor("/#", "Home").click(function (event) {
+      var navMenu = (0, _Html.default)().create('nav').addClass('nav-menu');
+      var navList = (0, _Html.default)().create('ul').addClass('nav-menu__list');
+      var navListItemHome = (0, _Html.default)().create('li').addClass('nav-menu__list-item').addAnchor('/#', 'Home').click(function (event) {
         event.preventDefault();
 
         _this.renderPageHome();
       });
-      var navListItemSongs = (0, _Html.default)().create("li").addClass("nav-menu__list-item").addAnchor("/#", "Songs").click(function (event) {
+      var navListItemSongs = (0, _Html.default)().create('li').addClass('nav-menu__list-item').addAnchor('/#', 'Songs').click(function (event) {
         event.preventDefault();
 
         _this.renderPageSongs();
       });
-      var navListItemAlbums = (0, _Html.default)().create("li").addClass("nav-menu__list-item").addAnchor("/#", "Albums").click(function (event) {
+      var navListItemAlbums = (0, _Html.default)().create('li').addClass('nav-menu__list-item').addAnchor('/#', 'Albums').click(function (event) {
         event.preventDefault();
 
         _this.renderPageAlbums();
@@ -357,8 +357,8 @@ function () {
   }, {
     key: "renderMainHeader",
     value: function renderMainHeader() {
-      var mainHeader = (0, _Html.default)().create("header").addClass("header");
-      var mainHeaderTitle = (0, _Html.default)().create("h1").addClass("header-title").text("Muzify"); // const nav = this.renderMainNav();
+      var mainHeader = (0, _Html.default)().create('header').addClass('header');
+      var mainHeaderTitle = (0, _Html.default)().create('h1').addClass('header-title').text('Muzify'); // const nav = this.renderMainNav();
 
       mainHeader.addChild(mainHeaderTitle); // mainHeader.addChild(nav);
 
@@ -367,8 +367,8 @@ function () {
   }, {
     key: "renderMainFooter",
     value: function renderMainFooter() {
-      var mainFooter = (0, _Html.default)().create("footer").addClass("footer");
-      var mainFooterCopy = (0, _Html.default)().create("small").addClass("copy").html("&copy; 2019 Muzify");
+      var mainFooter = (0, _Html.default)().create('footer').addClass('footer');
+      var mainFooterCopy = (0, _Html.default)().create('small').addClass('copy').html('&copy; 2019 Muzify');
       mainFooter.addChild(mainFooterCopy);
       return mainFooter;
     }
@@ -377,40 +377,40 @@ function () {
     value: function renderContentBlock(requestedData) {
       var _this2 = this;
 
-      var contentBlock = (0, _Html.default)().create("section").addClass("content-block");
-      var contentTitle = (0, _Html.default)().create("h2").addClass("content-title").text(requestedData);
-      var contentList = (0, _Html.default)().create("ul").addClass("content-list");
+      var contentBlock = (0, _Html.default)().create('section').addClass('content-block');
+      var contentTitle = (0, _Html.default)().create('h2').addClass('content-title').text(requestedData);
+      var contentList = (0, _Html.default)().create('ul').addClass('content-list');
       (0, _Api.default)().getRequest("http://localhost:3000/".concat(requestedData), function (responseCollection) {
         responseCollection.forEach(function (item) {
           var name;
 
-          if (requestedData === "artists") {
+          if (requestedData === 'artists') {
             name = "".concat(item.firstName, " ").concat(item.lastName, " ");
           }
 
-          if (requestedData === "songs") {
+          if (requestedData === 'songs') {
             name = "".concat(item.title);
           }
 
-          if (requestedData === "albums") {
+          if (requestedData === 'albums') {
             name = "".concat(item.title);
           }
 
-          var contentBlockListItem = (0, _Html.default)().create("li").addClass("content-block__list-item").addChild((0, _Html.default)().create("a").addAttribute("href", "".concat(requestedData, "/").concat(item._id)).text(name).click(function (event) {
+          var contentBlockListItem = (0, _Html.default)().create('li').addClass('content-block__list-item').addChild((0, _Html.default)().create('a').addAttribute('href', "".concat(requestedData, "/").concat(item._id)).text(name).click(function (event) {
             event.preventDefault();
-            var endpoint = event.target.getAttribute("href");
+            var endpoint = event.target.getAttribute('href');
             (0, _Api.default)().getRequest("http://localhost:3000/".concat(endpoint), function (data) {
-              var typeOfObject = endpoint.split("/")[0];
+              var typeOfObject = endpoint.split('/')[0];
 
-              if (typeOfObject === "artists") {
+              if (typeOfObject === 'artists') {
                 _this2.renderPageArtist(data);
               }
 
-              if (typeOfObject === "songs") {
+              if (typeOfObject === 'songs') {
                 _this2.renderPageSong(data);
               }
 
-              if (typeOfObject === "albums") {
+              if (typeOfObject === 'albums') {
                 _this2.renderPageAlbum(data);
               }
 
@@ -427,8 +427,8 @@ function () {
   }, {
     key: "renderMainContent",
     value: function renderMainContent(requestedData) {
-      var mainContent = (0, _Html.default)().create("main").addClass("content");
-      var containerDiv = (0, _Html.default)().create("div").addClass("container");
+      var mainContent = (0, _Html.default)().create('main').addClass('content');
+      var containerDiv = (0, _Html.default)().create('div').addClass('container');
       var contentBlock = this.renderContentBlock(requestedData);
       containerDiv.addChild(contentBlock);
       mainContent.addChild(containerDiv);
@@ -437,29 +437,29 @@ function () {
   }, {
     key: "renderPageAlbums",
     value: function renderPageAlbums() {
-      var currentMainContentContainer = this.getWrapperDiv().select(".content").select(".container");
-      currentMainContentContainer.replace(this.renderContentBlock("albums"));
+      var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container');
+      currentMainContentContainer.replace(this.renderContentBlock('albums'));
     }
   }, {
     key: "renderPageArtists",
     value: function renderPageArtists() {
-      var currentMainContentContainer = this.getWrapperDiv().select(".content").select(".container");
-      currentMainContentContainer.replace(this.renderContentBlock("artists"));
+      var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container');
+      currentMainContentContainer.replace(this.renderContentBlock('artists'));
     }
   }, {
     key: "renderPageSongs",
     value: function renderPageSongs() {
-      var currentMainContentContainer = this.getWrapperDiv().select(".content").select(".container");
-      currentMainContentContainer.replace(this.renderContentBlock("songs"));
+      var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container');
+      currentMainContentContainer.replace(this.renderContentBlock('songs'));
     }
   }, {
     key: "renderPageAlbum",
     value: function renderPageAlbum(data) {
-      var currentMainContentContainer = this.getWrapperDiv().select(".content").select(".container").select(".content-block");
-      var albumTitle = (0, _Html.default)().create("h3").addClass("content-title").text(data.title);
-      var albumSongs = (0, _Html.default)().create("ul").addClass("album__song-list");
+      var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container').select('.content-block');
+      var albumTitle = (0, _Html.default)().create('h3').addClass('content-title').text(data.title);
+      var albumSongs = (0, _Html.default)().create('ul').addClass('album__song-list');
       data.songList.forEach(function (song) {
-        var songElement = (0, _Html.default)().create("li").addChild((0, _Html.default)().create("a").addAttribute("href", "/songs/".concat(song._id)).text(song.title));
+        var songElement = (0, _Html.default)().create('li').addChild((0, _Html.default)().create('a').addAttribute('href', "/songs/".concat(song._id)).text(song.title));
         albumSongs.addChild(songElement);
       });
       currentMainContentContainer.replace(albumTitle);
@@ -468,11 +468,11 @@ function () {
   }, {
     key: "renderPageArtist",
     value: function renderPageArtist(data) {
-      var currentMainContentContainer = this.getWrapperDiv().select(".content").select(".container").select(".content-block");
-      var artistName = (0, _Html.default)().create("h3").addClass("content-title").text(data.firstName + " " + data.lastName);
-      var albums = (0, _Html.default)().create("ul").addClass("album-list");
+      var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container').select('.content-block');
+      var artistName = (0, _Html.default)().create('h3').addClass('content-title').text(data.firstName + ' ' + data.lastName);
+      var albums = (0, _Html.default)().create('ul').addClass('album-list');
       data.albumList.forEach(function (album) {
-        var albumElement = (0, _Html.default)().create("li").addChild((0, _Html.default)().create("a").addAttribute("href", "/albums/".concat(album._id)).text(album.title));
+        var albumElement = (0, _Html.default)().create('li').addChild((0, _Html.default)().create('a').addAttribute('href', "/albums/".concat(album._id)).text(album.title));
         albums.addChild(albumElement);
       });
       currentMainContentContainer.replace(artistName);
@@ -481,24 +481,52 @@ function () {
   }, {
     key: "renderPageSong",
     value: function renderPageSong(data) {
-      var currentMainContentContainer = this.getWrapperDiv().select(".content").select(".container").select(".content-block");
-      var albumTitle = (0, _Html.default)().create("h3").addClass("content-title").text(data.title);
-      currentMainContentContainer.replace(albumTitle);
-    }
+      var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container').select('.content-block');
+      var songTitle = (0, _Html.default)().create('h3').addClass('content-title').text(data.title);
+      var songs = (0, _Html.default)().create('ul').addClass('song-list');
+      var songListItem = (0, _Html.default)().create('li').addClass('content-block__list-item').addChild((0, _Html.default)().create('a').addAttribute('href', "".concat(data.songLink)).text('Link to youtube'));
+      var songDuration = (0, _Html.default)().create('li').addClass('content-block__list-item').text(data.duration); // data.albumList.forEach(album => {
+      //   const albumElement = Html()
+      //     .create("li")
+      //     .addChild(
+      //       Html()
+      //         .create("a")
+      //         .addAttribute("href", `/albums/${album._id}`)
+      //         .text(album.title)
+      //     );
+      //   albums.addChild(albumElement);
+      // });
+
+      currentMainContentContainer.replace(songTitle);
+      currentMainContentContainer.addChild(songs);
+      currentMainContentContainer.addChild(songListItem);
+      currentMainContentContainer.addChild(songDuration);
+    } // renderPageSong(data) {
+    //   const currentMainContentContainer = this.getWrapperDiv()
+    //     .select(".content")
+    //     .select(".container")
+    //     .select(".content-block");
+    //   const albumTitle = Html()
+    //     .create("h3")
+    //     .addClass("content-title")
+    //     .text(data.title);
+    //   currentMainContentContainer.replace(albumTitle);
+    // }
+
   }, {
     key: "renderPageSingle",
     value: function renderPageSingle(data, endpoint) {
-      var typeOfObject = endpoint.split("/")[1];
+      var typeOfObject = endpoint.split('/')[1];
 
-      if (typeOfObject === "artists") {
+      if (typeOfObject === 'artists') {
         this.renderPageArtist(data);
       }
 
-      if (typeOfObject === "songs") {
+      if (typeOfObject === 'songs') {
         this.renderPageSong(data);
       }
 
-      if (typeOfObject === "albums") {
+      if (typeOfObject === 'albums') {
         this.renderPageAlbum(data);
       }
     }
@@ -509,7 +537,7 @@ function () {
       var wrapperDiv = this.getWrapperDiv();
       var mainHeader = this.renderMainHeader();
       var navMenu = this.renderNavMenu();
-      var mainContent = this.renderMainContent("artists");
+      var mainContent = this.renderMainContent('artists');
       var mainFooter = this.renderMainFooter();
       wrapperDiv.addChild(mainHeader);
       wrapperDiv.addChild(navMenu);
@@ -596,7 +624,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50321" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60718" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
