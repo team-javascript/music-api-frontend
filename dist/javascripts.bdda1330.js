@@ -484,19 +484,32 @@ function () {
       var currentMainContentContainer = this.getWrapperDiv().select('.content').select('.container').select('.content-block');
       var songTitle = (0, _Html.default)().create('h3').addClass('content-title').text(data.title);
       var songs = (0, _Html.default)().create('ul').addClass('content-list');
-      var songListItem = (0, _Html.default)().create('li').addClass('content-block__list-item').addChild((0, _Html.default)().create('a').addAttribute('href', "".concat(data.songLink)).text('Link to Youtube'));
+      var songListItem = (0, _Html.default)().create('li').addClass('content-block__list-item').addChild((0, _Html.default)().create('iframe').addAttribute('type', "text/html").addAttribute('src', "".concat(data.songLink)).addAttribute('width', '560').addAttribute('height', '315').addAttribute('frameborder', '0').addAttribute('allow', 'autoplay').text('Link to Youtube'));
       var songDuration = (0, _Html.default)().create('li').addClass('content-block__list-item').text(data.duration);
       var commentsList = (0, _Html.default)().create('ul').addClass('content-list').text('Comments');
       data.comments.forEach(function (comment) {
-        console.log(content);
-        var commentToList = (0, _Html.default)().create('li').addClass('content-block__list-item').text(content);
+        var commentToList = (0, _Html.default)().create('li').addClass('content-block__list-item').text(comment.content);
         commentsList.addChild(commentToList);
       });
-      var rating = (0, _Html.default)().create('li').addClass('content-block__list-item').text(data.rating);
+      var rating = (0, _Html.default)().create('li').addClass('content-block__list-item').addClass('content-block__list-item--rating').text(data.rating);
+      var ratingDownButton = (0, _Html.default)().create('button').addClass('ratingDown-button').click(function () {
+        (0, _Api.default)().getRequest("http://localhost:3000/songs/".concat(data._id, "/decreaseRating"), function (song) {
+          (0, _Html.default)().select('.content-block__list-item--rating').text(song.rating);
+        });
+      });
+      var ratingUpButton = (0, _Html.default)().create('button').addClass('ratingUp-button');
+      var tagList = (0, _Html.default)().create('ul').addClass('content-list').text('Tags');
+      data.tags.forEach(function (tag) {
+        var tagToList = (0, _Html.default)().create('li').addClass('content-block__list-item').text(tag.name);
+        tagList.addChild(tagToList);
+      });
       songs.addChild(songListItem);
       songs.addChild(songDuration);
       songs.addChild(rating);
+      songs.addChild(ratingDownButton);
+      songs.addChild(ratingUpButton);
       songs.addChild(commentsList);
+      songs.addChild(tagList);
       currentMainContentContainer.replace(songTitle);
       currentMainContentContainer.addChild(songs);
     }
@@ -611,7 +624,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62656" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56811" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

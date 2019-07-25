@@ -272,8 +272,13 @@ class Components {
       .addClass('content-block__list-item')
       .addChild(
         Html()
-          .create('a')
-          .addAttribute('href', `${data.songLink}`)
+          .create('iframe')
+          .addAttribute('type', `text/html`)
+          .addAttribute('src', `${data.songLink}`)
+          .addAttribute('width', '560')
+          .addAttribute('height', '315')
+          .addAttribute('frameborder', '0')
+          .addAttribute('allow', 'autoplay')
           .text('Link to Youtube')
       );
 
@@ -288,23 +293,57 @@ class Components {
       .text('Comments');
 
     data.comments.forEach(comment => {
-      console.log(content);
       const commentToList = Html()
         .create('li')
         .addClass('content-block__list-item')
-        .text(content);
+        .text(comment.content);
       commentsList.addChild(commentToList);
     });
 
     const rating = Html()
       .create('li')
       .addClass('content-block__list-item')
+      .addClass('content-block__list-item--rating')
       .text(data.rating);
+
+    const ratingDownButton = Html()
+      .create('button')
+      .addClass('ratingDown-button')
+      .click(() => {
+        Api().getRequest(
+          `http://localhost:3000/songs/${data._id}/decreaseRating`,
+          song => {
+            Html()
+              .select('.content-block__list-item--rating')
+              .text(song.rating);
+          }
+        );
+      });
+
+    const ratingUpButton = Html()
+      .create('button')
+      .addClass('ratingUp-button');
+
+    const tagList = Html()
+      .create('ul')
+      .addClass('content-list')
+      .text('Tags');
+
+    data.tags.forEach(tag => {
+      const tagToList = Html()
+        .create('li')
+        .addClass('content-block__list-item')
+        .text(tag.name);
+      tagList.addChild(tagToList);
+    });
 
     songs.addChild(songListItem);
     songs.addChild(songDuration);
     songs.addChild(rating);
+    songs.addChild(ratingDownButton);
+    songs.addChild(ratingUpButton);
     songs.addChild(commentsList);
+    songs.addChild(tagList);
 
     currentMainContentContainer.replace(songTitle);
     currentMainContentContainer.addChild(songs);
