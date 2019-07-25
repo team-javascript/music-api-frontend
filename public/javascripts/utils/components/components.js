@@ -166,6 +166,7 @@ class Components {
     const currentMainContentContainer = this.getWrapperDiv()
       .select('.content')
       .select('.container');
+
     currentMainContentContainer.replace(this.renderContentBlock('albums'));
   }
 
@@ -173,6 +174,7 @@ class Components {
     const currentMainContentContainer = this.getWrapperDiv()
       .select('.content')
       .select('.container');
+
     currentMainContentContainer.replace(this.renderContentBlock('artists'));
   }
 
@@ -180,6 +182,7 @@ class Components {
     const currentMainContentContainer = this.getWrapperDiv()
       .select('.content')
       .select('.container');
+
     currentMainContentContainer.replace(this.renderContentBlock('songs'));
   }
 
@@ -196,18 +199,22 @@ class Components {
 
     const albumSongs = Html()
       .create('ul')
-      .addClass('album__song-list');
+      .addClass('content-list');
+
     data.songList.forEach(song => {
       const songElement = Html()
         .create('li')
+        .addClass('content-block__list-item')
         .addChild(
           Html()
             .create('a')
             .addAttribute('href', `/songs/${song._id}`)
             .text(song.title)
         );
+
       albumSongs.addChild(songElement);
     });
+
     currentMainContentContainer.replace(albumTitle);
     currentMainContentContainer.addChild(albumSongs);
   }
@@ -225,18 +232,22 @@ class Components {
 
     const albums = Html()
       .create('ul')
-      .addClass('album-list');
+      .addClass('content-list');
+
     data.albumList.forEach(album => {
       const albumElement = Html()
         .create('li')
+        .addClass('content-block__list-item')
         .addChild(
           Html()
             .create('a')
-            .addAttribute('href', `/albums/${album._id}`)
+            .addAttribute('href', `/albums/${albums._id}`)
             .text(album.title)
         );
+
       albums.addChild(albumElement);
     });
+
     currentMainContentContainer.replace(artistName);
     currentMainContentContainer.addChild(albums);
   }
@@ -254,7 +265,8 @@ class Components {
 
     const songs = Html()
       .create('ul')
-      .addClass('song-list');
+      .addClass('content-list');
+
     const songListItem = Html()
       .create('li')
       .addClass('content-block__list-item')
@@ -262,40 +274,41 @@ class Components {
         Html()
           .create('a')
           .addAttribute('href', `${data.songLink}`)
-          .text('Link to youtube')
+          .text('Link to Youtube')
       );
+
     const songDuration = Html()
       .create('li')
       .addClass('content-block__list-item')
       .text(data.duration);
 
-    // data.albumList.forEach(album => {
-    //   const albumElement = Html()
-    //     .create("li")
-    //     .addChild(
-    //       Html()
-    //         .create("a")
-    //         .addAttribute("href", `/albums/${album._id}`)
-    //         .text(album.title)
-    //     );
-    //   albums.addChild(albumElement);
-    // });
+    const commentsList = Html()
+      .create('ul')
+      .addClass('content-list')
+      .text('Comments');
+
+    data.comments.forEach(comment => {
+      console.log(content);
+      const commentToList = Html()
+        .create('li')
+        .addClass('content-block__list-item')
+        .text(content);
+      commentsList.addChild(commentToList);
+    });
+
+    const rating = Html()
+      .create('li')
+      .addClass('content-block__list-item')
+      .text(data.rating);
+
+    songs.addChild(songListItem);
+    songs.addChild(songDuration);
+    songs.addChild(rating);
+    songs.addChild(commentsList);
+
     currentMainContentContainer.replace(songTitle);
     currentMainContentContainer.addChild(songs);
-    currentMainContentContainer.addChild(songListItem);
-    currentMainContentContainer.addChild(songDuration);
   }
-  // renderPageSong(data) {
-  //   const currentMainContentContainer = this.getWrapperDiv()
-  //     .select(".content")
-  //     .select(".container")
-  //     .select(".content-block");
-  //   const albumTitle = Html()
-  //     .create("h3")
-  //     .addClass("content-title")
-  //     .text(data.title);
-  //   currentMainContentContainer.replace(albumTitle);
-  // }
 
   renderPageSingle(data, endpoint) {
     const typeOfObject = endpoint.split('/')[1];

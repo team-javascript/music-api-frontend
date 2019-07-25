@@ -43,7 +43,7 @@ a {
 
 .content-title {
   text-transform: capitalize;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 .content-block__list-item {
@@ -91,10 +91,10 @@ div.wrapper {
   grid-template-columns: 0.7fr 1fr 1fr 0.7fr;
   grid-template-rows: 0.5fr 1fr 1fr 0.2fr;
   grid-template-areas:
-    "header header header header"
-    "aside main main nav"
-    "aside main main nav"
-    "footer footer footer footer";
+    'header header header header'
+    'aside main main nav'
+    'aside main main nav'
+    'footer footer footer footer';
   min-height: 100vh;
 }
 
