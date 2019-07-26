@@ -62,9 +62,7 @@ class Components {
       .create("h1")
       .addClass("header-title")
       .text("Muzify");
-    // const nav = this.renderMainNav();
     mainHeader.addChild(mainHeaderTitle);
-    // mainHeader.addChild(nav);
     return mainHeader;
   }
 
@@ -210,6 +208,14 @@ class Components {
             .create("a")
             .addAttribute("href", `/songs/${song._id}`)
             .text(song.title)
+            .click(event => {
+              event.preventDefault();
+
+              const endpoint = event.target.getAttribute("href");
+              Api().getRequest(`http://localhost:3000${endpoint}`, data => {
+                this.renderPageSingle(data, endpoint);
+              });
+            })
         );
 
       albumSongs.addChild(songElement);
@@ -241,8 +247,16 @@ class Components {
         .addChild(
           Html()
             .create("a")
-            .addAttribute("href", `/albums/${albums._id}`)
+            .addAttribute("href", `/albums/${album._id}`)
             .text(album.title)
+            .click(event => {
+              event.preventDefault();
+
+              const endpoint = event.target.getAttribute("href");
+              Api().getRequest(`http://localhost:3000${endpoint}`, data => {
+                this.renderPageSingle(data, endpoint);
+              });
+            })
         );
 
       albums.addChild(albumElement);

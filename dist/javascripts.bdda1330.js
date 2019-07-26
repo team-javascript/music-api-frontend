@@ -358,10 +358,8 @@ function () {
     key: "renderMainHeader",
     value: function renderMainHeader() {
       var mainHeader = (0, _Html.default)().create("header").addClass("header");
-      var mainHeaderTitle = (0, _Html.default)().create("h1").addClass("header-title").text("Muzify"); // const nav = this.renderMainNav();
-
-      mainHeader.addChild(mainHeaderTitle); // mainHeader.addChild(nav);
-
+      var mainHeaderTitle = (0, _Html.default)().create("h1").addClass("header-title").text("Muzify");
+      mainHeader.addChild(mainHeaderTitle);
       return mainHeader;
     }
   }, {
@@ -455,11 +453,19 @@ function () {
   }, {
     key: "renderPageAlbum",
     value: function renderPageAlbum(data) {
+      var _this3 = this;
+
       var currentMainContentContainer = this.getWrapperDiv().select(".content").select(".container").select(".content-block");
       var albumTitle = (0, _Html.default)().create("h3").addClass("content-title").text(data.title);
       var albumSongs = (0, _Html.default)().create("ul").addClass("content-list");
       data.songList.forEach(function (song) {
-        var songElement = (0, _Html.default)().create("li").addClass("content-block__list-item").addChild((0, _Html.default)().create("a").addAttribute("href", "/songs/".concat(song._id)).text(song.title));
+        var songElement = (0, _Html.default)().create("li").addClass("content-block__list-item").addChild((0, _Html.default)().create("a").addAttribute("href", "/songs/".concat(song._id)).text(song.title).click(function (event) {
+          event.preventDefault();
+          var endpoint = event.target.getAttribute("href");
+          (0, _Api.default)().getRequest("http://localhost:3000".concat(endpoint), function (data) {
+            _this3.renderPageSingle(data, endpoint);
+          });
+        }));
         albumSongs.addChild(songElement);
       });
       currentMainContentContainer.replace(albumTitle);
@@ -468,11 +474,19 @@ function () {
   }, {
     key: "renderPageArtist",
     value: function renderPageArtist(data) {
+      var _this4 = this;
+
       var currentMainContentContainer = this.getWrapperDiv().select(".content").select(".container").select(".content-block");
       var artistName = (0, _Html.default)().create("h3").addClass("content-title").text(data.firstName + " " + data.lastName);
       var albums = (0, _Html.default)().create("ul").addClass("content-list");
       data.albumList.forEach(function (album) {
-        var albumElement = (0, _Html.default)().create("li").addClass("content-block__list-item").addChild((0, _Html.default)().create("a").addAttribute("href", "/albums/".concat(albums._id)).text(album.title));
+        var albumElement = (0, _Html.default)().create("li").addClass("content-block__list-item").addChild((0, _Html.default)().create("a").addAttribute("href", "/albums/".concat(album._id)).text(album.title).click(function (event) {
+          event.preventDefault();
+          var endpoint = event.target.getAttribute("href");
+          (0, _Api.default)().getRequest("http://localhost:3000".concat(endpoint), function (data) {
+            _this4.renderPageSingle(data, endpoint);
+          });
+        }));
         albums.addChild(albumElement);
       });
       currentMainContentContainer.replace(artistName);
@@ -628,7 +642,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50024" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50162" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

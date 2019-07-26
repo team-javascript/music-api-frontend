@@ -10,7 +10,7 @@ html {
   --primary-color: var(--mid-tone);
   --secondary-color: var(--accent-two-color);
   --accent-color: rgba(25, 158, 72, 0.7);
-  --accent-two-color: #f8f8f8;
+  --accent-two-color: #c0c0c0;
   --base-tone: rgb(15, 15, 15);
   --mid-tone: #66666666;
   font: 20px/1.5 serif;
@@ -27,29 +27,29 @@ a {
 /* application classes */
 
 .content {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   grid-area: main;
+  margin-bottom: 1rem;
 }
 
 .container {
   display: flex;
   flex-direction: column;
+  min-width: 90%;
   text-align: center;
-  min-width: 100%;
-  min-height: 100%;
 }
 
 .content-title {
+  margin: 1rem 0 1rem 0;
   text-transform: capitalize;
-  margin-bottom: 1rem;
 }
 
 .content-block__list-item {
   background-color: var(--mid-tone);
-  padding: 1rem;
   border-top: 2px solid black;
+  padding: 1rem;
 }
 
 .content-block__list-item:last-child {
@@ -58,17 +58,17 @@ a {
 
 .header {
   background-color: var(--accent-color);
-  display: flex;
-  justify-content: center;
-  grid-area: header;
   background-image: url(https://cdn.discordapp.com/attachments/589100036051304469/604048819172409363/Muzify_Final.png);
   background-repeat: no-repeat;
   background-size: contain;
+  display: flex;
+  grid-area: header;
+  justify-content: center;
 }
 
 .nav-menu {
-  grid-area: nav;
   display: flex;
+  grid-area: nav;
   justify-content: center;
   text-align: center;
 }
@@ -93,6 +93,7 @@ a {
 /* utility classes */
 
 div.wrapper {
+  background-color: #c0c0c0;
   display: grid;
   grid-template-columns: 0.7fr 1fr 1fr 0.7fr;
   grid-template-rows: 0.25fr 1fr 1fr 0.2fr;
@@ -102,32 +103,37 @@ div.wrapper {
     "aside main main nav"
     "footer footer footer footer";
   min-height: 100vh;
-  background-color: #f2f2f2;
 }
 
 .footer {
+  align-items: center;
   background-color: var(--base-tone);
   color: var(--accent-two-color);
   display: flex;
-  justify-content: center;
-  align-items: center;
   grid-area: footer;
+  justify-content: center;
 }
 
 .ratingDown-button {
   background-image: url("/thumbs_down_final.3c377ab9.png");
-  background-size: contain;
   background-repeat: no-repeat;
-  width: 50px;
+  background-size: contain;
   height: 50px;
+  width: 50px;
 }
 
 .ratingUp-button {
   background-image: url("/Thumbs_up_final.580d184d.png");
-  background-size: contain;
   background-repeat: no-repeat;
+  background-size: contain;
   width: 50px;
   height: 50px;
+}
+
+@media (max-width: 777px) {
+  .header-title {
+    display: none;
+  }
 }
 
 
